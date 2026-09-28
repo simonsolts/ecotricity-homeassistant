@@ -39,5 +39,5 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: uv venv
-      - run: uv pip install "${{ matrix.harness }}" aioresponses
+      - run: uv pip install "${{ matrix.harness }}"
       - run: .venv/bin/pytest -q
