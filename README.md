@@ -1,3 +1,8 @@
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="custom_components/ecotricity/brand/dark_logo@2x.png">
+  <img alt="Ecotricity for Home Assistant (unofficial)" src="custom_components/ecotricity/brand/logo@2x.png" width="384">
+</picture>
+
 # Ecotricity for Home Assistant
 
 Unofficial Home Assistant integration for [Ecotricity](https://www.ecotricity.co.uk/) (UK).
