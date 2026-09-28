@@ -17,6 +17,7 @@ from pytest_homeassistant_custom_component.components.recorder.common import asy
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
 from custom_components.ecotricity.const import BACKFILL_DAYS, DOMAIN, REFRESH_DAYS, UPDATE_INTERVAL
+from custom_components.ecotricity.diagnostics import async_get_config_entry_diagnostics
 
 from .common import ACCOUNT_ID, MPAN, READS, FakePortal, ip
 from .test_config_flow import ENTRY_DATA
@@ -165,3 +166,17 @@ async def test_unload(hass: HomeAssistant, portal: FakePortal, entry: MockConfig
     assert await hass.config_entries.async_unload(entry.entry_id)
     await hass.async_block_till_done()
     assert entry.state is ConfigEntryState.NOT_LOADED
+
+
+@pytest.mark.freeze_time("2026-09-28T09:00:00+01:00")
+async def test_diagnostics_redact_personal_data(
+    hass: HomeAssistant, portal: FakePortal, entry: MockConfigEntry
+) -> None:
+    await _setup(hass, entry)
+    diag = await async_get_config_entry_diagnostics(hass, entry)
+
+    text = json.dumps(diag, default=str)
+    for secret in (ACCOUNT_ID, MPAN, "user@example.com", "not-a-real-password", "1 Test Street", "654321"):
+        assert secret not in text
+    assert diag["meters"][0]["reading_count"] == 3
+    assert diag["tariffs"][0]["unit_rate"] == 21.88
