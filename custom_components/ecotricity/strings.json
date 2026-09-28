@@ -1,0 +1,66 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Ecotricity",
+        "description": "Use the email address and password of your Ecotricity online account (my.ecotricity.co.uk).",
+        "data": {
+          "username": "Email address",
+          "password": "Password"
+        }
+      },
+      "premise": {
+        "title": "Choose a supply address",
+        "description": "Your account has more than one supply address. Choose the one to add. You can add the others later.",
+        "data": {
+          "premise": "Supply address"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Log in to Ecotricity again",
+        "description": "The password for {username} does not work any more. Enter the new password.",
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "The email address or password is wrong.",
+      "cannot_connect": "Cannot connect to the Ecotricity portal. Try again later.",
+      "unknown": "The Ecotricity portal sent a response that the integration does not understand. See the log for details."
+    },
+    "abort": {
+      "already_configured": "This supply address is already set up.",
+      "no_premises": "The account has no active supply address.",
+      "reauth_successful": "The new password works.",
+      "wrong_account": "This password belongs to a different account, or the supply address is not active any more."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "meter_reading": {
+        "name": "Meter reading"
+      },
+      "last_consumption": {
+        "name": "Last daily consumption"
+      },
+      "last_reading_time": {
+        "name": "Last reading time"
+      },
+      "unit_rate": {
+        "name": "Unit rate"
+      },
+      "standing_charge": {
+        "name": "Standing charge"
+      }
+    }
+  },
+  "exceptions": {
+    "auth_failed": {
+      "message": "The Ecotricity portal did not accept the password."
+    },
+    "update_failed": {
+      "message": "Could not get data from the Ecotricity portal: {error}"
+    }
+  }
+}

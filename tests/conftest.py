@@ -8,6 +8,6 @@ pytest_plugins = ["pytest_homeassistant_custom_component"]
 
 
 @pytest.fixture(autouse=True)
-def auto_enable_custom_integrations(enable_custom_integrations):
-    """Let Home Assistant load the integration from custom_components/."""
+def auto_enable_custom_integrations(recorder_mock, enable_custom_integrations):
+    """Start a test recorder (the integration depends on it) and allow custom integrations."""
     return
