@@ -19,3 +19,7 @@ select = ["E", "F", "W", "I", "UP", "B", "SIM", "ASYNC", "RUF"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["custom_components.ecotricity"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv314"
