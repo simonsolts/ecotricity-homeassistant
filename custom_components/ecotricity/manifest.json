@@ -1,0 +1,17 @@
+{
+  "domain": "ecotricity",
+  "name": "Ecotricity",
+  "codeowners": [
+    "@simonsolts"
+  ],
+  "config_flow": true,
+  "dependencies": [
+    "recorder"
+  ],
+  "documentation": "https://github.com/simonsolts/ecotricity-homeassistant",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/simonsolts/ecotricity-homeassistant/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}
