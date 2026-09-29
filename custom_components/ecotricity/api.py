@@ -24,6 +24,13 @@ BASE_URL = "https://my.ecotricity.co.uk"
 AURA_URL = f"{BASE_URL}/s/sfsites/aura"
 IP_CLASS = "vlocity_cmt.IntegrationProcedureService"
 TIMEOUT = aiohttp.ClientTimeout(total=60)
+# The portal serves a different page, without the Aura token cookie setting, to
+# clients it does not recognise as a browser (for example the Home Assistant or
+# python-requests user agent). So send a browser user agent on every request.
+USER_AGENT = (
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/153.0.0.0 Safari/537.36"
+)
 
 _CONTEXT_RE = re.compile(r'"context"\s*:\s*\{')
 _BOOTSTRAP_RE = re.compile(r"/s/sfsites/l/([^/\"']+)/(?:bootstrap|app)\.js")
@@ -200,7 +207,7 @@ class EcotricityClient:
 
     async def _get(self, url: str) -> tuple[str, str, dict[str, str]]:
         """GET a page. Return the final URL, the body and the cookies the response set."""
-        async with self._session.get(url, timeout=TIMEOUT) as resp:
+        async with self._session.get(url, headers={"User-Agent": USER_AGENT}, timeout=TIMEOUT) as resp:
             if resp.status >= 400:
                 raise EcotricityApiError(f"GET {urllib.parse.urlsplit(url).path}: HTTP {resp.status}")
             cookies = {name: morsel.value for name, morsel in resp.cookies.items()}
@@ -257,6 +264,7 @@ class EcotricityClient:
             params={"r": str(self._counter), "aura.ApexAction.execute": "1"},
             data=data,
             headers={
+                "User-Agent": USER_AGENT,
                 "X-SFDC-LDS-Endpoints": (
                     "ApexActionController.execute:BusinessProcessDisplayController.GenericInvoke2NoCont"
                 ),

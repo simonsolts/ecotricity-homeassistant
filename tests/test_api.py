@@ -9,6 +9,7 @@ import pytest
 from pytest_homeassistant_custom_component.test_util.aiohttp import AiohttpClientMocker
 
 from custom_components.ecotricity.api import (
+    USER_AGENT,
     EcotricityAuthError,
     EcotricityClient,
     MeterPoint,
@@ -128,3 +129,13 @@ async def test_relogin_after_session_expiry(portal: FakePortal, client: Ecotrici
 
     assert len(tariffs) == 1
     assert portal.names().count("userLogin") == 2
+
+
+async def test_every_request_sends_a_browser_user_agent(
+    portal: FakePortal, client: EcotricityClient, aioclient_mock: AiohttpClientMocker
+) -> None:
+    # The portal serves a page without the token cookie setting to non-browser clients.
+    await client.get_premises()
+    assert aioclient_mock.mock_calls
+    for _method, url, _data, headers in aioclient_mock.mock_calls:
+        assert headers["User-Agent"] == USER_AGENT, url
