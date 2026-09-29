@@ -53,7 +53,8 @@ async def _async_get_premises(hass: HomeAssistant, username: str, password: str)
         _LOGGER.warning("Unexpected response from the Ecotricity portal: %s", err)
         raise ValueError("unknown") from err
     finally:
-        await session.close()
+        # Detach, do not close: the session shares Home Assistant's connector.
+        session.detach()
     return [p for p in premises if p.is_active]
 
 
