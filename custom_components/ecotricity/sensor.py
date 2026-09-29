@@ -125,6 +125,7 @@ class EcotricityMeterSensor(EcotricityEntity, SensorEntity):
         self._attr_extra_state_attributes = {"mpan": meter.meter_point.mpan}
         if description.key == "meter_reading":
             self._attr_extra_state_attributes["statistic_id"] = meter.statistic_id
+            self._attr_extra_state_attributes["cost_statistic_id"] = meter.cost_statistic_id
 
     @property
     def _meter(self) -> MeterData | None:

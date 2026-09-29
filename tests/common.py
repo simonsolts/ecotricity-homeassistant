@@ -95,6 +95,12 @@ TARIFF = {
     "meterPoints": [METER_POINT_ID],
 }
 
+AGREEMENT = {
+    "fromDt": "2026-09-19",
+    "toDt": "2028-09-19",
+    "products": [{"reference": "ED_TEST", "assets": [{"id": METER_POINT_ID, "identifier": MPAN}]}],
+}
+
 
 def _context(app: str, version: str) -> dict[str, Any]:
     return {"mode": "PROD", "fwuid": FWUID, "app": app, "loaded": {f"APPLICATION@markup://{app}": version}}
@@ -150,6 +156,7 @@ class FakePortal:
             "ECO_IP_GetMeterPoints": lambda _: ip({"RegisteredMetersResponseItems": [METER_ITEM]}),
             "ECO_IP_GetMeterReading": lambda _: ip({"result": "", "results": json.dumps(READS)}),
             "ECO_IP_GetTariffDetails": lambda _: ip({"tarrifDetails": [TARIFF]}),
+            "ECO_IP_GetAccountAgreements": lambda _: ip({"results": [AGREEMENT], "httpCode": 200}),
         }
         mock.get(f"{BASE}/s/login/", text=LOGIN_HTML)
         mock.get(FRONTDOOR_RE, text="ok")
