@@ -16,7 +16,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: EcotricityConfigEntry) -
     """Set up Ecotricity from a config entry."""
     # Each entry has its own session, so each has its own cookie jar.
     session = async_create_clientsession(hass, auto_cleanup=False)
-    entry.async_on_unload(session.close)
+    # Detach, do not close: the session shares Home Assistant's connector.
+    entry.async_on_unload(session.detach)
     client = EcotricityClient(session, entry.data[CONF_USERNAME], entry.data[CONF_PASSWORD])
 
     coordinator = EcotricityCoordinator(hass, entry, client)
