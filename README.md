@@ -20,18 +20,25 @@ Assistant 2026.2 or newer.
 
 **HACS (recommended)**
 
-1. In HACS, open the menu (⋮) and select **Custom repositories**.
-2. Add `https://github.com/simonsolts/ecotricity-homeassistant` with the type
-   **Integration**.
-3. Find **Ecotricity** in HACS and select **Download**.
-4. Restart Home Assistant.
+[![Open your Home Assistant instance and open this repository in HACS.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=simonsolts&repository=ecotricity-homeassistant&category=integration)
+
+1. Select the button above, then select **Download**. This opens the repository in HACS
+   in your Home Assistant.
+2. Restart Home Assistant.
+
+Or add it by hand: in HACS, open the menu (⋮), select **Custom repositories**, and add
+`https://github.com/simonsolts/ecotricity-homeassistant` with the type **Integration**.
+Then find **Ecotricity** in HACS, select **Download**, and restart.
 
 **Manual:** copy `custom_components/ecotricity` into the `custom_components` folder of
 your Home Assistant configuration, then restart.
 
 ## Set up
 
-1. Go to **Settings → Devices & services → Add integration** and select **Ecotricity**.
+[![Open your Home Assistant instance and start setting up Ecotricity.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=ecotricity)
+
+1. Select the button above. Or go to **Settings → Devices & services → Add
+   integration** and select **Ecotricity**.
 2. Enter the email address and password of your Ecotricity online account.
 3. If your account has more than one supply address, choose one. To add another, add the
    integration again.
