@@ -129,6 +129,16 @@ class Tariff:
     fuel: str
 
 
+@dataclass(frozen=True)
+class Agreement:
+    """A supply contract: which tariff applies to which meter points, and when."""
+
+    tariff_code: str
+    from_date: date
+    to_date: date | None
+    meter_point_ids: frozenset[str]
+
+
 def find_aura_context(html: str) -> AuraContext:
     """Find the `auraConfig.context` object in a portal page."""
     decoder = json.JSONDecoder()
@@ -465,3 +475,33 @@ class EcotricityClient:
             except (KeyError, TypeError, ValueError):
                 _LOGGER.debug("Skipping a tariff with missing rates")
         return tariffs
+
+    async def get_agreements(self, account_id: str, tariff_codes: list[str]) -> list[Agreement]:
+        """Return the agreements (contracts) for the given tariff codes."""
+        result = await self._call(
+            "ECO_IP_GetAccountAgreements",
+            # "currentaggrement" is spelled like this by the portal.
+            {"IsDualOffer": False, "currentaggrement": tariff_codes, "juniferAccountId": account_id},
+        )
+        agreements = []
+        for item in _as_list(result.get("results") if isinstance(result, dict) else None):
+            try:
+                from_date = date.fromisoformat(item["fromDt"])
+            except (KeyError, TypeError, ValueError):
+                continue
+            to_date = None
+            if item.get("toDt"):
+                try:
+                    to_date = date.fromisoformat(item["toDt"])
+                except (TypeError, ValueError):
+                    to_date = None
+            for product in _as_list(item.get("products")):
+                agreements.append(
+                    Agreement(
+                        tariff_code=str(product.get("reference", "")),
+                        from_date=from_date,
+                        to_date=to_date,
+                        meter_point_ids=frozenset(str(a["id"]) for a in _as_list(product.get("assets")) if "id" in a),
+                    )
+                )
+        return agreements

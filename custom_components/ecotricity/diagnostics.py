@@ -21,6 +21,7 @@ TO_REDACT = {
     "id",
     "mpan",
     "statistic_id",
+    "cost_statistic_id",
     "title",
 }
 
@@ -35,6 +36,7 @@ async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: Ecotric
             {
                 "meter_point": asdict(meter.meter_point),
                 "statistic_id": meter.statistic_id,
+                "cost_statistic_id": meter.cost_statistic_id,
                 "reading_count": len(meter.readings),
                 "latest_readings": [asdict(r) for r in meter.readings[-3:]],
             }
