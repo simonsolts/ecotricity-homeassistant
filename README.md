@@ -1,6 +1,6 @@
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="custom_components/ecotricity/brand/dark_logo@2x.png">
-  <img alt="Ecotricity for Home Assistant (unofficial)" src="custom_components/ecotricity/brand/logo@2x.png" width="384">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/simonsolts/ecotricity-homeassistant/refs/heads/main/custom_components/ecotricity/brand/dark_logo.png">
+  <img alt="Ecotricity for Home Assistant (unofficial)" src="https://raw.githubusercontent.com/simonsolts/ecotricity-homeassistant/refs/heads/main/custom_components/ecotricity/brand/logo.png" width="384">
 </picture>
 
 # Ecotricity for Home Assistant
