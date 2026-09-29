@@ -35,7 +35,10 @@ your Home Assistant configuration, then restart.
 
 ## Set up
 
-1. Go to **Settings → Devices & services → Add integration** and select **Ecotricity**.
+[![Open your Home Assistant instance and start setting up Ecotricity.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=ecotricity)
+
+1. Select the button above. Or go to **Settings → Devices & services → Add
+   integration** and select **Ecotricity**.
 2. Enter the email address and password of your Ecotricity online account.
 3. If your account has more than one supply address, choose one. To add another, add the
    integration again.
