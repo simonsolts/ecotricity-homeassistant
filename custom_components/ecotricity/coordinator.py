@@ -32,7 +32,7 @@ from .const import (
     CONF_ACCOUNT_ID,
     CONF_PROPERTY_ID,
     DOMAIN,
-    PORTAL_TIME_ZONE,
+    PORTAL_TZ,
     REFRESH_DAYS,
     UPDATE_INTERVAL,
 )
@@ -89,7 +89,7 @@ class EcotricityCoordinator(DataUpdateCoordinator[EcotricityData]):
         self.property_id: int = entry.data[CONF_PROPERTY_ID]
         self._meter_points: list[MeterPoint] | None = None
         self._agreements: dict[str, list[Agreement]] = {}
-        self._tz = dt_util.get_time_zone(PORTAL_TIME_ZONE)
+        self._tz = PORTAL_TZ
 
     async def _async_update_data(self) -> EcotricityData:
         try:
