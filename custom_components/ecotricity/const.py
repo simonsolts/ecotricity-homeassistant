@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from datetime import timedelta
 from typing import Final
+from zoneinfo import ZoneInfo
 
 DOMAIN: Final = "ecotricity"
 
@@ -19,4 +20,5 @@ BACKFILL_DAYS: Final = 395
 REFRESH_DAYS: Final = 14
 
 # Junifer times have no time zone. They are UK local time.
-PORTAL_TIME_ZONE: Final = "Europe/London"
+# Built at import time, which Home Assistant runs off the event loop.
+PORTAL_TZ: Final = ZoneInfo("Europe/London")

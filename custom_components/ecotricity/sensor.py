@@ -16,10 +16,9 @@ from homeassistant.components.sensor import (
 from homeassistant.const import UnitOfEnergy
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
-from homeassistant.util import dt as dt_util
 
 from .api import Tariff
-from .const import PORTAL_TIME_ZONE
+from .const import PORTAL_TZ
 from .coordinator import EcotricityConfigEntry, EcotricityCoordinator, MeterData
 from .entity import EcotricityEntity
 
@@ -37,7 +36,7 @@ class TariffSensorDescription(SensorEntityDescription):
 
 
 def _local(value: datetime | None) -> datetime | None:
-    return value.replace(tzinfo=dt_util.get_time_zone(PORTAL_TIME_ZONE)) if value else None
+    return value.replace(tzinfo=PORTAL_TZ) if value else None
 
 
 # The meter reading has no state class on purpose. Reads arrive hours late, so
